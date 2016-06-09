@@ -1,3 +1,13 @@
+//Actions
+//  ADD DECK
+//  SHOW ADD DECK
+//  HIDE ADD DECK
+//  
+// Action creators
+const addDeck = name => ({ type: 'ADD_DECK',data: name });
+const showAddDeck = () => ({type: 'SHOW_ADD_DECK'});
+const hideAddDeck = () => ({type: 'HIDE_ADD_DECK'});
+
 //need to be thinking about our state shape
 //
 //  generally good to have as many top level id's as possible
@@ -25,10 +35,30 @@ const cards = (state, action) => {
   }
 };
 
+const decks = (state, action) => {
+  switch (action.type) {
+    case 'ADD_DECK':
+      let newDeck = { name: action.data, id: +new Date };
+      return state.concat([newDeck]);
+      default:
+        return state || [];
+  }
+};
+
+const addingDeck = (state, action) => {
+  switch (action.type) {
+    case 'SHOW_ADD_DECK': return true;
+    case 'HIDE_ADD_DECK': return false;
+    default: return !!state; //state || false;
+  }
+};
+
 // create a store - we're writing a reducer here
 // The state object below is the entire state tree
 const store = Redux.createStore(Redux.combineReducers({
-  cards
+  cards,
+  decks,
+  addingDeck
 }));
 
 // The Redux.combineReducers() function replaces the function below
@@ -66,9 +96,22 @@ const Sidebar = React.createClass({
   }
 });
 
-ReactDOM.render((<App>
-  <Sidebar decks={[ { name: 'Deck 1' } ]} addingDeck={true} />
+function run () {
+  let state = store.getState();
+  console.log(state);
+  ReactDOM.render((<App>
+  <Sidebar decks={state.decks} addingDeck={state.addingDeck} />
 </App>), document.getElementById('root'));
+}
+
+run();
+
+store.subscribe(run);
+
+window.show = () => store.dispatch(showAddDeck());
+window.hide = () => store.dispatch(hideAddDeck());
+window.add = () => store.dispatch(addDeck(new Date().toString()));
+
 
 
 
