@@ -1,5 +1,6 @@
+"use strict";
 // create a store - we're writing a reducer here
-const store = Redux.createStore(function (state, action){
+const store = Redux.createStore(function(state, action) {
   switch (action.type) {
     case 'ADD_CARD':
       let newCard = Object.assign({}, action.data, {
@@ -10,13 +11,13 @@ const store = Redux.createStore(function (state, action){
       return Object.assign({}, state, {
         cards: state.cards ? state.cards.concat([newCard]) : [newCard]
       });
-      default:
+    default:
       return state || {};
   }
 });
 
 store.subscribe(() => {
- console.log(store.getState());
+  console.log(store.getState());
 });
 
 store.dispatch({
@@ -25,7 +26,7 @@ store.dispatch({
     front: 'front',
     back: 'back'
   }
-  });
+});
 
 store.dispatch({
   type: 'ADD_CARD',
