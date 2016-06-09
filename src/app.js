@@ -41,19 +41,31 @@ const store = Redux.createStore(Redux.combineReducers({
 //     };
 // });
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
+// Create a pure React component:
+const App = (props) => {
+  return (<div className='app'>
+    {props.children}
+    
+  </div>);
+};
 
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {
-    front: 'front',
-    back: 'back'
-  }
-});
+ReactDOM.render(<App> Hello React </App>, document.getElementById('root'));
 
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {}
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -44,21 +44,19 @@ var store = Redux.createStore(Redux.combineReducers({
 //     };
 // });
 
-store.subscribe(function () {
-  console.log(store.getState());
-});
+// Create a pure React component:
+var App = function App(props) {
+  return React.createElement(
+    'div',
+    { className: 'app' },
+    props.children
+  );
+};
 
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {
-    front: 'front',
-    back: 'back'
-  }
-});
-
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {}
-});
+ReactDOM.render(React.createElement(
+  App,
+  null,
+  ' Hello React '
+), document.getElementById('root'));
 
 },{}]},{},[1]);
